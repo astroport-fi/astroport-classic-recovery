@@ -3,7 +3,7 @@ import { useWallet } from "@terra-money/wallet-kit";
 
 import { Pair } from "../types";
 import { getPairName } from "../helpers/pool";
-import { DEFAULT_PRECISION } from "../helpers/token";
+import { DEFAULT_PRECISION, getDenom, getIcon } from "../helpers/token";
 import { formatTokenAmount } from "../helpers/balance";
 import useLpBalance from "../hooks/useLpBalance";
 import useCurrentWallet from "../hooks/useCurrentWallet";
@@ -74,13 +74,27 @@ export default function Pool({
     });
   };
 
-  if (hideZeroBalances && lpBalance === "0" && stakeLpBalance === "0") {
+  if (
+    hideZeroBalances &&
+    lpBalances.isFetched &&
+    lpBalance === "0" &&
+    stakeLpBalance === "0"
+  ) {
     return null;
   }
 
   return (
     <tr>
-      <td>{getPairName(pool)}</td>
+      <td>
+        <img height={20} src={getIcon(getDenom(pool.asset_infos[0]))} />
+        <img height={20} src={getIcon(getDenom(pool.asset_infos[1]))} />
+        <a
+          href={`https://finder.terra-classic.hexxagon.io/mainnet/address/${pool.contract_addr}`}
+          target="_blank"
+        >
+          {getPairName(pool)}
+        </a>
+      </td>
       <td>{formatTokenAmount(lpBalance, DEFAULT_PRECISION)}</td>
       <td>{formatTokenAmount(stakeLpBalance, DEFAULT_PRECISION)}</td>
       <td>

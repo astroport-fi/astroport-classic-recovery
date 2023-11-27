@@ -1,9 +1,9 @@
 import { Pair } from "../types";
-import { getSymbol } from "./token";
+import { getDenom, getSymbol } from "./token";
 
 export function getPairName(pair: Pair) {
   const [firstAsset, secondAsset] = pair.asset_infos;
-  const firstSymbol = getSymbol(firstAsset);
-  const secondSymbol = getSymbol(secondAsset);
+  const firstSymbol = getSymbol(getDenom(firstAsset));
+  const secondSymbol = getSymbol(getDenom(secondAsset));
   return `${firstSymbol} / ${secondSymbol}`;
 }

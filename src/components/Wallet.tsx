@@ -3,7 +3,7 @@ import { useWallet } from "@terra-money/wallet-kit";
 
 import { num } from "../lib/num";
 import { formatTokenAmount } from "../helpers/balance";
-import { getTokenPrecision } from "../helpers/token";
+import { getIcon, getTokenPrecision } from "../helpers/token";
 import { toBase64 } from "../helpers/encoding";
 import { contracts } from "../config/contracts";
 import { DEFAULT_NETWORK } from "../config/networks";
@@ -57,8 +57,17 @@ export default function Wallet() {
         ))}
       {walletAddress && (
         <>
-          <p>Wallet address: {walletAddress}</p>
           <p>
+            Wallet address:{" "}
+            <a
+              href={`https://finder.terra-classic.hexxagon.io/mainnet/address/${walletAddress}`}
+              target="_blank"
+            >
+              {walletAddress}
+            </a>
+          </p>
+          <p>
+            <img height={20} src={getIcon("uluna")} />
             LUNAC balance:{" "}
             {formatTokenAmount(
               lunaBalance?.data || "0",
@@ -66,6 +75,7 @@ export default function Wallet() {
             )}
           </p>
           <p>
+            <img height={20} src={getIcon("uusd")} />
             USTC balance:{" "}
             {formatTokenAmount(
               usdBalance?.data || "0",
@@ -73,14 +83,28 @@ export default function Wallet() {
             )}
           </p>
           <p>
-            ASTROC balance:{" "}
+            <img height={20} src={getIcon(contracts.astro_token_address)} />
+            <a
+              href={`https://finder.terra-classic.hexxagon.io/mainnet/address/${contracts.astro_token_address}`}
+              target="_blank"
+            >
+              ASTROC
+            </a>{" "}
+            balance:{" "}
             {formatTokenAmount(
               astroBalance?.data || "0",
               getTokenPrecision(contracts.astro_token_address)
             )}
           </p>
           <p>
-            xASTROC balance:{" "}
+            <img height={20} src={getIcon(contracts.xastro_token_address)} />
+            <a
+              href={`https://finder.terra-classic.hexxagon.io/mainnet/address/${contracts.xastro_token_address}`}
+              target="_blank"
+            >
+              xASTROC
+            </a>{" "}
+            balance:{" "}
             {formatTokenAmount(
               xastroBalance?.data || "0",
               getTokenPrecision(contracts.xastro_token_address)
